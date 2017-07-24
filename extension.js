@@ -4,6 +4,22 @@
 // Import the module and reference it with the alias vscode in your code below
 let vscode = require('vscode');
 
+let insertText = (value) => {
+    let editor = vscode.window.activeTextEditor;
+    if (!editor){
+        vscode.window.showErrorMessage("Can't insert text because no document is open.");
+        return;
+    }
+
+    let selection = editor.selection;
+
+    let range = new vscode.Range(selection.start, selection.end);
+
+    editor.edit((editBuilder) => {
+        editBuilder.replace(range, value)
+    });
+};
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
@@ -12,20 +28,12 @@ function activate(context) {
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "static-site-hero" is now active!');
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.sayHello', function () {
-        // The code you place here will be executed every time your command is executed
-
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
-    });
-
-    context.subscriptions.push(disposable);
-
     let fileLinkDisposable = vscode.commands.registerCommand('extension.insertLink', () => {
-        vscode.window.showInformationMessage("fileLinkDisposable")
+        let linkTypeList = ["File", "Link"];
+
+        vscode.window.showQuickPick(linkTypeList, {placeHolder: 'Link Type'}).then(result => {
+            insertText(result);
+        });
     });
 
     context.subscriptions.push(fileLinkDisposable);
@@ -42,3 +50,4 @@ exports.activate = activate;
 function deactivate() {
 }
 exports.deactivate = deactivate;
+
