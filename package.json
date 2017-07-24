@@ -11,13 +11,32 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:extension.sayHello",
+        "onCommand:extension.insertLink",
+        "onCommand:extension.insertFigure"
     ],
     "main": "./extension",
     "contributes": {
         "commands": [{
             "command": "extension.sayHello",
             "title": "Hello World"
+        },{
+            "command": "extension.insertLink",
+            "title": "Insert md link to file or image"
+        },{
+            "command": "extension.insertFigure",
+            "title": "insert html figure"
+        }],
+        "keybindings": [{
+            "command": "extension.insertLink",
+            "key": "shift+ctrl+f1",
+            "mac": "shit+cmd+f1",
+            "when": "editorTextFocus"
+        },{
+            "command": "extension.insertFigure",
+            "key": "shift+ctrl+f2",
+            "mac": "shit+cmd+f2",
+            "when": "editorTextFocus"
         }]
     },
     "scripts": {
