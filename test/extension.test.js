@@ -1,3 +1,5 @@
+"use strict";
+
 /* global suite, test */
 
 //
@@ -20,5 +22,13 @@ suite("Extension Tests", function() {
     test("Something 1", function() {
         assert.equal(-1, [1, 2, 3].indexOf(5));
         assert.equal(-1, [1, 2, 3].indexOf(0));
+    });
+
+    test("Update Template with Date", () => {
+        let template = "images/${year}/${month}";
+
+        let updatedTemplate = myExtension.updateTemplateWithDate(template);
+
+        assert.notEqual(updatedTemplate, null);
     });
 });
